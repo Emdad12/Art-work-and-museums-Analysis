@@ -1,6 +1,3 @@
-# Art work and museums Analysis
-## Overview
-This repository contains SQL-based analysis performed on a dataset of museums, artists, and paintings. The analysis includes identifying popular artists, museum statistics, painting styles, and pricing trends.
 # Artworks and Museums Analysis
 
 ## Overview
