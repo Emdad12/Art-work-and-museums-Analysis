@@ -106,7 +106,14 @@ SELECT *
  city='' OR 
  city REGEXP '^[0-9]+$';
 ```
-
+Output:
+| museum_id | name                             | address               | city  | state           | postal | country | phone            | url                                                           |
+|-----------|----------------------------------|-----------------------|-------|-----------------|--------|---------|------------------|---------------------------------------------------------------|
+| 34        | The State Hermitage Museum       | Palace Square         | 2     | Sankt-Peterburg | 190000 | Russia  | 7 812 710-90-79  | https://www.hermitagemuseum.org/wps/portal/hermitage/         |
+| 36        | Museum Folkwang                  | Museumsplatz 1        | 45128 | Essen           |        | Germany | 49 201 8845000   | https://www.museum-folkwang.de/en                             |
+| 37        | Museum of Grenoble               | 5 Pl. de Lavalette    | 38000 | Grenoble        |        | France  | 33 4 76 63 44 44 | https://www.museedegrenoble.fr/1986-the-museum-in-english.htm |
+| 38        | MusÃ©e des Beaux-Arts de Quimper | 40 Pl. Saint-Corentin | 29000 | Quimper         |        | France  | 33 2 98 95 45 20 | https://www.mbaq.fr/en/home-3.html                            |
+| 40        | MusÃ©e du Louvre                 | Rue de Rivoli         | 75001 | Paris           |        | France  | 33 1 40 20 50 50 | https://www.louvre.fr/en                                      |
 - **8. Fetch the top 10 most famous painting subject.**
 ```sql
 SELECT subject,ranks,subject_count
@@ -120,6 +127,19 @@ FROM (
     GROUP BY s.subject) AS ranked_subjects
 WHERE ranks BETWEEN 1 AND 10;
 ```
+Output:
+| subject             | ranks | subject_count |
+|---------------------|-------|---------------|
+| Portraits           | 1     | 677           |
+| Landscape Art       | 2     | 396           |
+| Abstract/Modern Art | 3     | 338           |
+| Marine Art/Maritime | 4     | 257           |
+| Rivers/Lakes        | 5     | 249           |
+| Nude                | 6     | 240           |
+| Flowers             | 7     | 220           |
+| Still-Life          | 8     | 212           |
+| Horses              | 9     | 188           |
+| Seascapes           | 10    | 167           |
 
 - **9. Identify the museums which are open on both Sunday and Monday.Display museum name, city.**
 ```sql
@@ -133,6 +153,37 @@ WHERE mh.day ='Sunday' AND
                        WHERE mh.museum_id=mh2.museum_id
                        AND mh2.day='Monday');
 ```
+Output:
+| name                              | city         |
+|-----------------------------------|--------------|
+| The Museum of Modern Art          | New York     |
+| Pushkin State Museum of Fine Arts | Moscow       |
+| National Gallery of Victoria      | Melbourne    |
+| The Metropolitan Museum of Art    | New York     |
+| Museum of Grenoble                | 38000        |
+| Nelson-Atkins Museum of Art       | Kansas City  |
+| MusÃ©e du Louvre                  | 75001        |
+| National Maritime Museum          | London       |
+| Museum of Fine Arts Boston        | Boston       |
+| Rijksmuseum                       | Amsterdam    |
+| Israel Museum                     | Jerusalem    |
+| National Gallery of Art           | Washington   |
+| National Gallery                  | London       |
+| Mauritshuis Museum                | Den Haag     |
+| The Prado Museum                  | Madrid       |
+| The Barnes Foundation             | Philadelphia |
+| Van Gogh Museum                   | Amsterdam    |
+| Los Angeles County Museum of Art  | Los Angeles  |
+| Solomon R. Guggenheim Museum      | New York     |
+| The Tate Gallery                  | London       |
+| Museum of Fine Arts of Nancy      | Nancy        |
+| Smithsonian American Art Museum   | Washington   |
+| Philadelphia Museum of Art        | Philadelphia |
+| The Art Institute of Chicago      | Chicago      |
+| Army Museum                       | Paris        |
+| National Gallery Prague           | NovÃ© MÄ›st  |
+| Norton Simon Museum               | Pasadena     |
+| Courtauld Gallery                 | Stran        |
 - **10. How many museums are open every single day?**
 ```sql
 SELECT COUNT(*) AS num_museums_open_every_day
