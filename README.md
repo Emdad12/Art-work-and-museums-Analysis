@@ -12,6 +12,9 @@ This repository contains SQL-based analysis performed on a dataset of museums, a
 - **works**: Contains data about individual paintings, including the artist, painting style, museum location, and sale price.
 - **product_size**: Information about the canvas size of the artworks, including dimensions and pricing.
 - **museum_hours**: Hours of operation for various museums.
+- **subject**:Information about the painting subject
+- **canvas_size**:Contains canvas width,height,label
+- **image_link**:Includes information painting image
 
 ## Key Analyses
 
