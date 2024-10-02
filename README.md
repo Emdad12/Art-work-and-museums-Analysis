@@ -99,9 +99,44 @@ SELECT *
  city='' OR 
  city REGEXP '^[0-9]+$';
 ```
--**8. Museum_Hours table has 1 invalid entry. Identify it and remove it.**
--****
--****
+
+-**8.Fetch the top 10 most famous painting subject.**
+```sql
+SELECT subject,ranks,subject_count
+FROM (
+    SELECT s.subject,
+           COUNT(*) AS subject_count,
+           RANK() OVER (ORDER BY COUNT(*) DESC) AS ranks
+    FROM subject AS s
+    JOIN works AS w
+    ON s.work_id = w.work_id
+    GROUP BY s.subject) AS ranked_subjects
+WHERE ranks BETWEEN 1 AND 10;
+```
+
+-**9. Identify the museums which are open on both Sunday and Monday.Display museum name, city.**
+```sql
+SELECT m.name ,m.city
+FROM museum m
+JOIN museum_hours mh
+ON m.museum_id = mh.museum_id
+WHERE mh.day ='Sunday' AND 
+                       EXISTS (SELECT museum_id
+                       FROM museum_hours mh2
+                       WHERE mh.museum_id=mh2.museum_id
+                       AND mh2.day='Monday');
+```
+-**11. How many museums are open every single day?**
+```sql
+SELECT COUNT(*) AS num_museums_open_every_day
+FROM (
+    SELECT mh.museum_id
+    FROM museum_hours mh
+    GROUP BY mh.museum_id
+    HAVING COUNT(DISTINCT mh.day) = 7
+) AS open_every_day;
+```
+
 -****
 -****
 -****
