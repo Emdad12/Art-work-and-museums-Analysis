@@ -86,6 +86,11 @@ JOIN canvas_size AS cs
 ON cs.size_id=ps.size_id
 WHERE ps.ranks=1;
 ```
+Output:
+| full_name           | painting_count | nationality |
+|---------------------|----------------|-------------|
+| Jan Willem Pieneman | 14             | Dutch       |
+
 - **6. Delete duplicate records from works**
 ```sql
  WITH rankworks AS (
