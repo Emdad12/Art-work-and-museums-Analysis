@@ -69,7 +69,7 @@ ON w.work_id = ps.work_id
 WHERE ps.sale_price < 0.5*ps.regular_price ;
 ```
 Output:  
--**5. Which canva size costs the most?  
+-**5.Which canva size costs the most?  
 ```sql
 SELECT cs.label AS canva,ps.sale_price
 FROM (SELECT * ,
@@ -79,15 +79,27 @@ JOIN canvas_size AS cs
 ON cs.size_id=ps.size_id
 WHERE ps.ranks=1;
 ```
--**6.Delete duplicate records from work, product_size, subject and image_link tables**
+-**6.Delete duplicate records from works**
 ```sql
-
-
-
-
-
--****
--****
+ WITH rankworks AS (
+ SELECT work_id,
+ ROW_NUMBER() OVER(PARTITION BY work_id ORDER BY work_id) AS rn
+ FROM works)
+ DELETE w
+ FROM works w
+ JOIN rankworks rw
+ ON w.work_id=rw.work_id
+ WHERE rw.rn>1;
+```
+-**7.Identify the museums with invalid city information in the given dataset**  
+```sql
+SELECT *
+ FROM museum
+ WHERE city IS NULL OR 
+ city='' OR 
+ city REGEXP '^[0-9]+$';
+```
+-**8. Museum_Hours table has 1 invalid entry. Identify it and remove it.**
 -****
 -****
 -****
