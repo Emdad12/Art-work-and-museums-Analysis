@@ -34,7 +34,7 @@ This repository contains SQL-based analysis performed on a dataset of museums, a
 The SQL queries used in the analysis can be found in the [SQL Queries](SQL Queries) folder.
 
 ### Example Queries:
-- **Q1.Fetch all the paintings which are not displayed on any museums?**:
+- **1.Fetch all the paintings which are not displayed on any museums?**:
   ```sql
   SELECT artist.full_name, COUNT(*) AS num_paintings
   FROM works
@@ -43,15 +43,36 @@ The SQL queries used in the analysis can be found in the [SQL Queries](SQL Queri
   ORDER BY num_paintings DESC
   LIMIT 5;
   ```
-Output:There are 5789 painting
-- **Q2.Are there museums without any paintings?**:
+ Output:There are 5789 painting
+- **2.Are there museums without any paintings?**:
   ```sql
   SELECT m.name, m.city
   FROM museum m
   WHERE NOT EXISTS (SELECT 1 FROM works w WHERE w.museum_id = m.museum_id);
   ```
-Output:Yes,there are 16 musuems without painting
--**
+ Output: Yes,there are 16 musuems without painting
+-**3.How many paintings have an asking price of more than their regular price?**
+```sql
+SELECT COUNT(*) AS No_of_painting
+FROM works w
+JOIN product_size ps
+ON w.work_id= ps.work_id
+WHERE ps.sale_price > ps.regular_price;
+```
+Output:There are no painting
+-**4.Identify the paintings whose asking price is less than 50% of its regular price
+```sql
+SELECT * 
+FROM works w
+JOIN product_size ps
+ON w.work_id = ps.work_id
+WHERE ps.sale_price < 0.5*ps.regular_price ;
+```
+Output:
+-**5. Which canva size costs the most?
+```sql
+
+
 
 
 
