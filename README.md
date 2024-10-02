@@ -34,7 +34,7 @@ This repository contains SQL-based analysis performed on a dataset of museums, a
 The SQL queries used in the analysis can be found in the [SQL Queries](SQL Queries) folder.
 
 ### Example Queries:
-- **1.Fetch all the paintings which are not displayed on any museums?**:
+- **1. Fetch all the paintings which are not displayed on any museums?**:
   ```sql
   SELECT artist.full_name, COUNT(*) AS num_paintings
   FROM works
@@ -44,14 +44,14 @@ The SQL queries used in the analysis can be found in the [SQL Queries](SQL Queri
   LIMIT 5;
   ```
  Output:There are 5789 painting  
-- **2.Are there museums without any paintings?**:
+- **2. Are there museums without any paintings?**:
   ```sql
   SELECT m.name, m.city
   FROM museum m
   WHERE NOT EXISTS (SELECT 1 FROM works w WHERE w.museum_id = m.museum_id);
   ```
  Output: Yes,there are 16 musuems without painting  
--**3.How many paintings have an asking price of more than their regular price?**  
+- **3. How many paintings have an asking price of more than their regular price?**  
 ```sql
 SELECT COUNT(*) AS No_of_painting
 FROM works w
@@ -60,7 +60,7 @@ ON w.work_id= ps.work_id
 WHERE ps.sale_price > ps.regular_price;
 ```
 Output:There are no painting  
--**4.Identify the paintings whose asking price is less than 50% of its regular price  
+- **4. Identify the paintings whose asking price is less than 50% of its regular price** 
 ```sql
 SELECT * 
 FROM works w
@@ -69,7 +69,7 @@ ON w.work_id = ps.work_id
 WHERE ps.sale_price < 0.5*ps.regular_price ;
 ```
 Output:  
--**5.Which canva size costs the most?  
+- **5. Which canva size costs the most?** 
 ```sql
 SELECT cs.label AS canva,ps.sale_price
 FROM (SELECT * ,
@@ -79,7 +79,7 @@ JOIN canvas_size AS cs
 ON cs.size_id=ps.size_id
 WHERE ps.ranks=1;
 ```
--**6.Delete duplicate records from works**
+- **6. Delete duplicate records from works**
 ```sql
  WITH rankworks AS (
  SELECT work_id,
@@ -91,7 +91,7 @@ WHERE ps.ranks=1;
  ON w.work_id=rw.work_id
  WHERE rw.rn>1;
 ```
--**7.Identify the museums with invalid city information in the given dataset**  
+- **7. Identify the museums with invalid city information in the given dataset**  
 ```sql
 SELECT *
  FROM museum
@@ -100,7 +100,7 @@ SELECT *
  city REGEXP '^[0-9]+$';
 ```
 
--**8.Fetch the top 10 most famous painting subject.**
+- **8. Fetch the top 10 most famous painting subject.**
 ```sql
 SELECT subject,ranks,subject_count
 FROM (
@@ -114,7 +114,7 @@ FROM (
 WHERE ranks BETWEEN 1 AND 10;
 ```
 
--**9. Identify the museums which are open on both Sunday and Monday.Display museum name, city.**
+- **9. Identify the museums which are open on both Sunday and Monday.Display museum name, city.**
 ```sql
 SELECT m.name ,m.city
 FROM museum m
@@ -126,7 +126,7 @@ WHERE mh.day ='Sunday' AND
                        WHERE mh.museum_id=mh2.museum_id
                        AND mh2.day='Monday');
 ```
--**10.How many museums are open every single day?**
+- **10. How many museums are open every single day?**
 ```sql
 SELECT COUNT(*) AS num_museums_open_every_day
 FROM (
@@ -137,7 +137,7 @@ FROM (
 ) AS open_every_day;
 ```
 
--**12.Which are the top 5 most popular museum? (Popularity is defined based on most no of paintings in a museum)**
+- **11. Which are the top 5 most popular museum? (Popularity is defined based on most no of paintings in a museum)**
 ```sql
 SELECT m.name,m.city,m.country,x.no_of_painting
 FROM( SELECT m.museum_id,COUNT(*) AS no_of_painting,
@@ -152,7 +152,7 @@ ON m.museum_id=x.museum_id
 WHERE x.ranks <=5;
 ```
 
--**13. Who are the top 5 most popular artist? (Popularity is defined based on most no of paintings done by an artist)**
+- **12. Who are the top 5 most popular artist? (Popularity is defined based on most no of paintings done by an artist)**
 ```sql
 SELECT a.artist_id,a.full_name,a.nationality,a.style,x.no_of_paintings
  FROM ( SELECT w.artist_id,COUNT(*) AS no_of_paintings,
@@ -167,7 +167,7 @@ SELECT a.artist_id,a.full_name,a.nationality,a.style,x.no_of_paintings
  WHERE x.ranks <= 5;
 ```
 
--**14.Display the 3 least popular canva sizes**
+- **13. Display the 3 least popular canva sizes**
 ```sql
 SELECT cs.*,x.frequency
  FROM(SELECT ps.size_id,COUNT(*) AS frequency,
@@ -181,7 +181,7 @@ JOIN canvas_size cs
 ON cs.size_id= x.size_id
 WHERE x.ranks <=3;
 ```
--**15.Identify the artists whose paintings are displayed in multiple countries**
+- **14. Identify the artists whose paintings are displayed in multiple countries**
 ```sql
 SELECT a.full_name AS artist_name,
        COUNT(DISTINCT m.country) AS country_count
@@ -192,7 +192,7 @@ GROUP BY a.artist_id, a.full_name
 HAVING COUNT(DISTINCT m.country) > 1;
 ```
 
--**Identify the artist and the museum where the most expensive and least expensive painting is placed. Display the artist name, sale_price, painting name, museum name, museum 
+- **15. Identify the artist and the museum where the most expensive and least expensive painting is placed. Display the artist name, sale_price, painting name, museum name, museum 
  city and canvas label**
 ```sql
 WITH cte AS (
@@ -213,7 +213,7 @@ JOIN canvas_size cz
 ON cz.size_id = cte.size_id
 WHERE cte.rnk = 1 OR cte.rnk_asc = 1;
 ```
--**Which country has the 5th highest no of paintings?
+- **16. Which country has the 5th highest no of paintings?**
 ```sql
 SELECT *
 FROM( SELECT m.country,COUNT(*) AS no_of_paintings,
@@ -226,7 +226,7 @@ FROM( SELECT m.country,COUNT(*) AS no_of_paintings,
      WHERE x.ranks=5;
 ```
 
--**Which are the 3 most popular and 3 least popular painting styles?**
+- **17. Which are the 3 most popular and 3 least popular painting styles?**
 ```sql
 -- 3 Most popular styles
 SELECT style, COUNT(*) AS frequency
@@ -242,8 +242,8 @@ ORDER BY frequency ASC
 LIMIT 3;
 ```
 
--**Which artist has the most no of Portraits paintings outside USA?. Display artist name, no of paintings and the artist nationality**
-```
+- **18. Which artist has the most no of Portraits paintings outside USA?. Display artist name, no of paintings and the artist nationality**
+```sql
 SELECT full_name,painting_count,nationality
 FROM (SELECT a.full_name,a.nationality,COUNT(*) AS painting_count,
       RANK () OVER (ORDER BY COUNT(*) DESC) AS ranks
@@ -260,33 +260,6 @@ FROM (SELECT a.full_name,a.nationality,COUNT(*) AS painting_count,
       ) AS x
  WHERE x.ranks = 1;
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Tools Used
 - MySQL Workbench
 - GitHub for version control
