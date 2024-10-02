@@ -43,7 +43,7 @@ The SQL queries used in the analysis can be found in the [SQL Queries](SQL Queri
   ORDER BY num_paintings DESC
   LIMIT 5;
   ```
- Output:There are 5789 painting  
+ Output:There are 5587 painting which are not displayed any museums 
 - **2. Are there museums without any paintings?**:
   ```sql
   SELECT m.name, m.city
@@ -59,7 +59,7 @@ JOIN product_size ps
 ON w.work_id= ps.work_id
 WHERE ps.sale_price > ps.regular_price;
 ```
-Output:There are no painting  
+Output:There are no painting have an asking price of more than their regular price 
 - **4. Identify the paintings whose asking price is less than 50% of its regular price** 
 ```sql
 SELECT * 
@@ -68,7 +68,14 @@ JOIN product_size ps
 ON w.work_id = ps.work_id
 WHERE ps.sale_price < 0.5*ps.regular_price ;
 ```
-Output:  
+Output:
+| work_id | name                                             | artist_id | style          | museum_id | work_id | size_id | sale_price | regular_price |
+|---------|--------------------------------------------------|-----------|----------------|-----------|---------|---------|------------|---------------|
+| 31780   | Portrait of Madame Labille-Guyard and Her Pupils | 621       | Neo-Classicism | 35        | 31780   | 30      | 10         | 95            |
+| 31780   | Portrait of Madame Labille-Guyard and Her Pupils | 621       | Neo-Classicism | 35        | 31780   | 36      | 10         | 125           |
+| 31780   | Portrait of Madame Labille-Guyard and Her Pupils | 621       | Neo-Classicism | 35        | 31780   | 30      | 10         | 95            |
+| 31780   | Portrait of Madame Labille-Guyard and Her Pupils | 621       | Neo-Classicism | 35        | 31780   | 36      | 10         | 125           |
+
 - **5. Which canva size costs the most?** 
 ```sql
 SELECT cs.label AS canva,ps.sale_price
