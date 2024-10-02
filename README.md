@@ -43,15 +43,15 @@ The SQL queries used in the analysis can be found in the [SQL Queries](SQL Queri
   ORDER BY num_paintings DESC
   LIMIT 5;
   ```
- Output:There are 5789 painting
+ Output:There are 5789 painting  
 - **2.Are there museums without any paintings?**:
   ```sql
   SELECT m.name, m.city
   FROM museum m
   WHERE NOT EXISTS (SELECT 1 FROM works w WHERE w.museum_id = m.museum_id);
   ```
- Output: Yes,there are 16 musuems without painting
--**3.How many paintings have an asking price of more than their regular price?**
+ Output: Yes,there are 16 musuems without painting  
+-**3.How many paintings have an asking price of more than their regular price?**  
 ```sql
 SELECT COUNT(*) AS No_of_painting
 FROM works w
@@ -59,8 +59,8 @@ JOIN product_size ps
 ON w.work_id= ps.work_id
 WHERE ps.sale_price > ps.regular_price;
 ```
-Output:There are no painting
--**4.Identify the paintings whose asking price is less than 50% of its regular price
+Output:There are no painting  
+-**4.Identify the paintings whose asking price is less than 50% of its regular price  
 ```sql
 SELECT * 
 FROM works w
@@ -68,9 +68,42 @@ JOIN product_size ps
 ON w.work_id = ps.work_id
 WHERE ps.sale_price < 0.5*ps.regular_price ;
 ```
-Output:
--**5. Which canva size costs the most?
+Output:  
+-**5. Which canva size costs the most?  
 ```sql
+SELECT cs.label AS canva,ps.sale_price
+FROM (SELECT * ,
+RANK() OVER( ORDER BY sale_price DESC) AS ranks
+ FROM product_size ) AS ps
+JOIN canvas_size AS cs
+ON cs.size_id=ps.size_id
+WHERE ps.ranks=1;
+```
+-**6.Delete duplicate records from work, product_size, subject and image_link tables**
+```sql
+
+
+
+
+
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+-****
+
 
 
 
