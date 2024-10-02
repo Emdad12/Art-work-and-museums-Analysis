@@ -34,7 +34,7 @@ This repository contains SQL-based analysis performed on a dataset of museums, a
 The SQL queries used in the analysis can be found in the [SQL Queries](SQL Queries) folder.
 
 ### Example Queries:
-- **Most Popular Artists**:
+- **Q1.Fetch all the paintings which are not displayed on any museums?**:
   ```sql
   SELECT artist.full_name, COUNT(*) AS num_paintings
   FROM works
@@ -43,13 +43,43 @@ The SQL queries used in the analysis can be found in the [SQL Queries](SQL Queri
   ORDER BY num_paintings DESC
   LIMIT 5;
   ```
-
-- **Museums with No Paintings**:
+Output:There are 5789 painting
+- **Q2.Are there museums without any paintings?**:
   ```sql
   SELECT m.name, m.city
   FROM museum m
   WHERE NOT EXISTS (SELECT 1 FROM works w WHERE w.museum_id = m.museum_id);
   ```
+Output:Yes,there are 16 musuems without painting
+-**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Tools Used
 - MySQL Workbench
@@ -62,3 +92,17 @@ Clone the repository and use the SQL queries in any MySQL-compatible database sy
 ## Future Work
 - Incorporating machine learning for price prediction based on painting attributes.
 - Further analysis of painting styles across different time periods.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
